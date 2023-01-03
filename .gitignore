@@ -37,3 +37,9 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Test output folders
+example_*
+*/.DS_Store
+.DS_Store
+test_data/cnv_input/ASCAT_NGS*

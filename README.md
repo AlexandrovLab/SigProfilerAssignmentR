@@ -8,7 +8,7 @@
 # SigProfilerAssignmentR
 An R wrapper for running the SigProfilerAssignment framework.
 
-SigProfilerAssignment allows assigning previously known mutational signatures to individual samples and individual somatic mutations. The tool provides the ability to _refit_ different types of reference mutational signatures, including [COSMIC signatures](https://cancer.sanger.ac.uk/signatures/), as well as custom signature databases. _Refitting of known_ mutational signatures is a numerical optimization approach tat not only identifies the set of operative mutational signatures in a particular sample, but also quantifies the number of mutations attributed to each signature found in that sample. The tool makes use of [SigProfilerMatrixGenerator](https://github.com/AlexandrovLab/SigProfilerMatrixGenerator) and [SigProfilerPlotting](https://github.com/AlexandrovLab/SigProfilerPlotting), seamlessly integrating with other [SigProfiler tools](https://cancer.sanger.ac.uk/signatures/tools/).
+SigProfilerAssignmentR allows assigning previously known mutational signatures to individual samples and individual somatic mutations. The tool provides the ability to _refit_ different types of reference mutational signatures, including [COSMIC signatures](https://cancer.sanger.ac.uk/signatures/), as well as custom signature databases. _Refitting of known_ mutational signatures is a numerical optimization approach tat not only identifies the set of operative mutational signatures in a particular sample, but also quantifies the number of mutations attributed to each signature found in that sample. The tool makes use of [SigProfilerMatrixGenerator](https://github.com/AlexandrovLab/SigProfilerMatrixGenerator) and [SigProfilerPlotting](https://github.com/AlexandrovLab/SigProfilerPlotting), seamlessly integrating with other [SigProfiler tools](https://cancer.sanger.ac.uk/signatures/tools/).
 
 For users that prefer working in a Python environment, please check: https://github.com/AlexandrovLab/SigProfilerAssignment. Detailed documentation can be found at: https://osf.io/mz79v/wiki/home/.
 
@@ -66,7 +66,7 @@ If you do not see your python path listed, restart your R session and rerun the 
 >> install("GRCh37", rsync=FALSE, bash=TRUE)
 ```
 
-This will install the human 37 assembly as a reference genome. 
+This will install the human GRCh37 assembly as a reference genome. 
 
 **SUPPORTED GENOMES**
 
@@ -180,11 +180,11 @@ cosmic_fit(samples="test_data/cnv_input/all.breast.ascat.summary.sample.tsv",
 ```R
 library(SigProfilerAssignmentR)
 
-Analyze.cosmic_fit(samples="test_data/txt_input/sample_matrix_SBS.txt", 
-                   output="example_mm",
-                   input_type="matrix",
-                   genome_build="GRCh37",
-                   cosmic_version=3.3)
+cosmic_fit(samples="test_data/txt_input/sample_matrix_SBS.txt", 
+           output="example_mm",
+           input_type="matrix",
+           genome_build="GRCh37",
+           cosmic_version=3.3)
 ```
 
 ## <a name="copyright"></a> Copyright
