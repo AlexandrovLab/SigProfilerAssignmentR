@@ -43,3 +43,6 @@ example_*
 */.DS_Store
 .DS_Store
 test_data/cnv_input/ASCAT_NGS*
+test_data/vcf_input/input
+test_data/vcf_input/logs
+test_data/vcf_input/output
