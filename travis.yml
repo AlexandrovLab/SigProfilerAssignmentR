@@ -1,0 +1,19 @@
+dist: xenial
+language: r
+latex: false
+
+r:
+  - release
+
+addons:
+  apt:
+    packages:
+      - libharfbuzz-dev
+      - libfribidi-dev
+
+cache:
+  packages: true
+
+warnings_are_errors: false
+
+script: R -f test.R

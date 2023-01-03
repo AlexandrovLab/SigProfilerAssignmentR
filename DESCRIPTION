@@ -1,0 +1,15 @@
+Package: SigProfilerAssignmentR
+Type: Package
+Title: An R wrapper for running the SigProfilerAssignment framework
+Version: 0.0.23
+Author: Marcos Díaz-Gay
+Maintainer: Marcos Díaz-Gay <mdiazgay@health.ucsd.edu>
+Description: SigProfilerAssignment allows assigning previously known mutational signatures
+             to individual samples and individual somatic mutations.
+             The tool provides the ability to _refit_ different types of reference
+             mutational signatures, including COSMIC signatures, as well as custom signature databases.
+License: BSD 2-Clause License
+Encoding: UTF-8
+LazyData: true
+Imports:
+	reticulate, devtools

@@ -1,0 +1,4 @@
+export(cosmic_fit)
+export(install)
+import(devtools)
+import(reticulate)
