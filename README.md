@@ -8,12 +8,21 @@
 # SigProfilerAssignmentR
 An R wrapper for running the SigProfilerAssignment framework.
 
-SigProfilerAssignmentR allows assigning previously known mutational signatures to individual samples and individual somatic mutations. The tool provides the ability to _refit_ different types of reference mutational signatures, including [COSMIC signatures](https://cancer.sanger.ac.uk/signatures/), as well as custom signature databases. _Refitting of known_ mutational signatures is a numerical optimization approach tat not only identifies the set of operative mutational signatures in a particular sample, but also quantifies the number of mutations attributed to each signature found in that sample. The tool makes use of [SigProfilerMatrixGenerator](https://github.com/AlexandrovLab/SigProfilerMatrixGenerator) and [SigProfilerPlotting](https://github.com/AlexandrovLab/SigProfilerPlotting), seamlessly integrating with other [SigProfiler tools](https://cancer.sanger.ac.uk/signatures/tools/).
+SigProfilerAssignment enables assignment of previously known mutational signatures to individual samples and individual somatic mutations. The tool refits different types of reference mutational signatures, including [COSMIC signatures](https://cancer.sanger.ac.uk/signatures/), as well as custom signature databases. Refitting of known mutational signatures is a numerical optimization approach that not only identifies the set of operative mutational signatures in a particular sample, but also quantifies the number of mutations assigned to each signature found in that sample. SigProfilerAssignment makes use of [SigProfilerMatrixGenerator](https://github.com/AlexandrovLab/SigProfilerMatrixGenerator) and [SigProfilerPlotting](https://github.com/AlexandrovLab/SigProfilerPlotting), seamlessly integrating with other [SigProfiler tools](https://cancer.sanger.ac.uk/signatures/tools/).
 
 For users that prefer working in a Python environment, please check: https://github.com/AlexandrovLab/SigProfilerAssignment. Detailed documentation can be found at: https://osf.io/mz79v/wiki/home/.
 
 
-## Installation
+## Table of contents
+- [Installation](#installation)
+- [Running](#running)
+  - [Main Parameters](#parameters)
+  - [Signature Subgroups](#subgroups)
+- [Examples](#examples)
+- [Copyright](#copyright)
+- [Contact Information](#contact)
+
+## <a name="installation"></a> Installation
 **PREREQUISITES**
 
 devtools  (R) 
@@ -72,9 +81,9 @@ This will install the human GRCh37 assembly as a reference genome.
 
 Other available reference genomes are GRCh38, mm9, mm10, and rn6. Information about supported genomes can be found at https://github.com/AlexandrovLab/SigProfilerMatrixGeneratorR
 
-## Running
+## <a name="running"></a> Running
 
-Assigning of known mutational signatures to individual samples can be performed using the `cosmic_fit` function. Input samples can be provided using mutation calling files (VCFs, MAFs, or simple text files), segmentation files or mutational matrices. COSMIC mutational signatures v3.3 are used as the default reference signatures, although previous COSMIC versions and custom signature databases are also supported using the `cosmic_version` and `signature_database` parameters.
+Assignment of known mutational signatures to individual samples is performed using the `cosmic_fit` function. Input samples are provided using the `samples` parameter in the form of mutation calling files (VCFs, MAFs, or simple text files), segmentation files or mutational matrices. COSMIC mutational signatures v3.3 are used as the default reference signatures, although previous COSMIC versions and custom signature databases are also supported using the `cosmic_version` and `signature_database` parameters. Results will be found in the folder specified in the `output` parameter.
 
 ```R
 >> library(SigProfilerAssignmentR)
@@ -86,13 +95,13 @@ Assigning of known mutational signatures to individual samples can be performed 
               sample_reconstruction_plots=FALSE, verbose=FALSE)
 ```
 
-### Main Parameters
+### <a name="parameters"></a> Main Parameters
 
 | Parameter | Variable Type | Parameter Description |
 | ------ | ----------- | ----------- |
-| samples | String | Path to the input somatic mutations file (segmentation file/mutational matrix) or folder (mutation calling file). |
+| samples | String | Path to the input somatic mutations file (if using segmentation file/mutational matrix) or input folder (mutation calling file/s). |
 | output | String | Path to the output folder. |
-| input_type | String | Three accepted input types:<ul><li> "vcf": if using mutation calling file/s (VCF, MAF, simple text file) as input</li><li>"seg:TYPE": if using a segmentation file as input. Please check the required format at https://github.com/AlexandrovLab/SigProfilerMatrixGenerator#copy-number-matrix-generation. The accepted callers for TYPE are the following {"ASCAT", "ASCAT_NGS", "SEQUENZA", "ABSOLUTE", "BATTENBERG", "FACETS", "PURPLE", "TCGA"}.For example:"seg:BATTENBERG"</li><li>"matrix": if using a mutational matrix as input</li></ul>The default value is "matrix". |
+| input_type | String | Three accepted input types:<ul><li> "vcf": if using mutation calling file/s (VCF, MAF, simple text file) as input</li><li>"seg:TYPE": if using a segmentation file as input. Please check the required format at https://github.com/AlexandrovLab/SigProfilerMatrixGenerator#copy-number-matrix-generation. The accepted callers for TYPE are the following {"ASCAT", "ASCAT_NGS", "SEQUENZA", "ABSOLUTE", "BATTENBERG", "FACETS", "PURPLE", "TCGA"}. For example:"seg:BATTENBERG"</li><li>"matrix": if using a mutational matrix as input</li></ul>The default value is "matrix". |
 | context_type | String | Required context type if `input_type` is "vcf". `context_type` takes which context type of the input data is considered for assignment. Valid options include "96", "288", "1536", "DINUC", and "ID". The default value is "96". |
 | cosmic_version | Float | Defines the version of the COSMIC reference signatures. Takes a positive float among 1, 2, 3, 3.1, 3.2 and 3.3. The default value is 3.3. |
 | exome | Boolean | Defines if the exome renormalized COSMIC signatures will be used. The default value is False. |
@@ -106,25 +115,25 @@ Assigning of known mutational signatures to individual samples can be performed 
 | verbose | Boolean | Prints detailed statements. The default value is False. |
 
 
-### Signature Subgroups
+### <a name="subgroups"></a> Signature Subgroups
 
 When using COSMIC reference signatures, some subgroups of signatures can be removed to improve the refitting analysis. To use this feature, the `exclude_signature_subgroups` parameter should be added, following the sintax below:
 
 ```python
-exclude_signature_subgroups = ['remove_MMR_deficiency_signatures',
-                               'remove_POL_deficiency_signatures',
-                               'remove_HR_deficiency_signatures' ,
-                               'remove_BER_deficiency_signatures',
-                               'remove_Chemotherapy_signatures',
-                               'remove_Immunosuppressants_signatures'
-                               'remove_Treatment_signatures'
-                               'remove_APOBEC_signatures',
-                               'remove_Tobacco_signatures',
-                               'remove_UV_signatures',
-                               'remove_AA_signatures',
-                               'remove_Colibactin_signatures',
-                               'remove_Artifact_signatures',
-                               'remove_Lymphoid_signatures']
+exclude_signature_subgroups = ['MMR_deficiency_signatures',
+                               'POL_deficiency_signatures',
+                               'HR_deficiency_signatures' ,
+                               'BER_deficiency_signatures',
+                               'Chemotherapy_signatures',
+                               'Immunosuppressants_signatures'
+                               'Treatment_signatures'
+                               'APOBEC_signatures',
+                               'Tobacco_signatures',
+                               'UV_signatures',
+                               'AA_signatures',
+                               'Colibactin_signatures',
+                               'Artifact_signatures',
+                               'Lymphoid_signatures']
 ```
 
 The full list of signature subgroups is included in the following table:
@@ -147,7 +156,7 @@ The full list of signature subgroups is included in the following table:
 |Lymphoid_signatures|           9, 84, 85|                      -|      -|
 
 
-## Examples
+## <a name="examples"></a> Examples
 
 ### Using mutation calling files (VCFs) as input
 
